@@ -14,8 +14,8 @@ def get_dataloader(batch_size):
     # RandomResizedCrop():reshape image
     # RandomHorizaontalFlip(): random flip image
     # Normalize: RGB mean, std
-    train_dataset = torchvision.datasets.CIFAR10('./p10_dataset', train=True, transform=data_transform["train"], download=False)
-    test_dataset = torchvision.datasets.CIFAR10('./p10_dataset', train=False, transform=data_transform["val"], download=False)
+    train_dataset = torchvision.datasets.CIFAR10('./dataset/cifar10/p10_dataset', train=True, transform=data_transform["train"], download=False)
+    test_dataset = torchvision.datasets.CIFAR10('./dataset/cifar10/p10_dataset', train=False, transform=data_transform["val"], download=False)
     print('训练数据集长度: {}'.format(len(train_dataset)))
     print('测试数据集长度: {}'.format(len(test_dataset)))
     # DataLoader创建数据集
@@ -27,7 +27,7 @@ def get_dataloader(batch_size):
 if __name__ == "__main__":
     device = torch.device("cuda:0")
     model = vit.ViT(image_size=224, patch_size=16, num_classes=10, dim=32, depth=2, heads=4, mlp_dim=32, pool = 'cls', channels = 3, dim_head = 64, dropout = 0., emb_dropout = 0.)
-    model.load_state_dict(torch.load("best_acc.pth"))
+    model.load_state_dict(torch.load("dataset/cifar10/cifar10.pth"))
     model = model.to(device)
     model.eval()
     eval_loss = 0
